@@ -393,7 +393,7 @@
                         <?php echo _l('save_and_send'); ?>
                     </button>
                     <button class="btn btn-info mleft5 billing-form-submit transaction-submit" type="button">
-                      <?php echo _l('submit'); ?>
+                      <?php echo _l('save'); ?>
                     </button>
                </div>
                </div>
