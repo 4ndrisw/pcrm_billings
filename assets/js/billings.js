@@ -443,9 +443,9 @@ function billing_mark_as(status_id, billing_id) {
     data.status = status_id;
     data.billingid = billing_id;
     $.post(admin_url + 'billings/update_billing_status', data).done(function (response) {
-        //table_billings.DataTable().ajax.reload(null, false);
         reload_billings_tables();
     });
+    init_billing_status(status_id);
 }
 
 // Reload all billings possible table where the table data needs to be refreshed after an action is performed on task.
@@ -759,4 +759,8 @@ function calculate_total_with_pph() {
   );
 
   $(document).trigger("sales-total-calculated");
+}
+
+function init_billing_status(billing_status){
+  $(".billing-status").html(format_billing_status(billing_status));
 }
