@@ -11,7 +11,7 @@ $aColumns = [
     'total',
     'total_tax',
     'date',
-    'datecreated',
+    'reseller_name',
     'status',
 ];
 
@@ -138,12 +138,12 @@ foreach ($rResult as $aRow) {
 
     $row[] = $amount;
 
-    $row[] = app_format_money($aRow['total_tax'], $aRow['currency']);
+    $row[] = ($aRow['total_tax'] > 0) ? app_format_money($aRow['total_tax'], $aRow['currency']) : NULL;
 
     $row[] = _d($aRow['date']);
 
 
-    $row[] = _d($aRow['datecreated']);
+    $row[] = $aRow['reseller_name'];
 
             $span = '';
                 //if (!$locked) {
