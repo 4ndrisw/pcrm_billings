@@ -98,4 +98,15 @@ $lang['billing_mark_as']                = 'Mark as %s';
 $lang['billing_currency'] = 'Currency';
 $lang['billing_add_edit_client_note'] = 'Client note';
 $lang['billing_total_tax'] = 'PPn';
+$lang['billing_notes'] = 'Notes';
+$lang['reseller'] = 'Reseller';
+$lang['reseller_name'] = 'Reseller name';
+$lang['billing_pph'] = 'PPh';
 
+$lang['billing_select_customer'] = 'Client';
+$lang['show_shipping_on_billing'] = 'Show Shipping on Invoice';
+$lang['billing_add_edit_number'] = 'Invoice Number';
+$lang['settings_sales_billing_prefix'] = 'Prefix Invoice Number';
+$lang['reseller_billing'] = 'Reseller';
+$lang['use_reseller'] = 'Use Reseller ?';
+$lang['billing_reseller_help'] = 'Check this to use reseller or not ';
