@@ -29,9 +29,10 @@ INSERT INTO `tblemailtemplates` (`type`, `slug`, `language`, `name`, `subject`, 
 
 // Add options for billings
 add_option('delete_only_on_last_billing', 1);
-add_option('billing_prefix', 'PH-');
+add_option('billing_prefix', 'INV-');
+add_option('receipt_prefix', 'KWT-');
 add_option('next_billing_number', 1);
-add_option('default_billing_assigned', 3);
+add_option('default_billing_assigned', 9);
 add_option('billing_number_decrement_on_delete', 0);
 add_option('billing_number_format', 4);
 add_option('billing_year', date('Y'));
@@ -40,28 +41,20 @@ add_option('exclude_billing_from_client_area_with_draft_status', 1);
 
 
 add_option('predefined_client_note_billing', '
---Review Dokumen;
---Pemeriksaan Visual;
---Pengujian Operasional;
---Pemeriksaan Perlengkapan Pengaman;
---Pengujian NDT Penetrant;
---Pengujian NDT Thickness;
---Pengujian Thermal Infrared;
---Pengujian Grounding;
---Laporan hasil Riksa Uji.
+-Pembayaran Dapat Ditransfer Ke :, 
+-Nama Rekening : NAMA_AKUN,
+-Nomor Rekening : NOMOR_REKENING,
+-Nama Bank : Bank Syariah Indonesia (BSI) - Kota Serang,
     ');
 
-add_option('predefined_terms_billing', '
-==Harga belum berikut Pajak PPn 11 %;
-==Pengurusan SUKET K3 Disnaker Propinsi;
-==Tidak termasuk beban dan alat bantu angkat;
-==Termin Pembayaran : 100% setelah Surat Keterangan terbit.
+add_option(
+
     ');
 
 add_option('billing_due_after', 1);
 add_option('allow_staff_view_billings_assigned', 1);
 add_option('show_assigned_on_billings', 1);
-add_option('require_client_logged_in_to_view_billing', 0);
+add_option('require_client_logged_in_to_view_billing', 1);
 
 add_option('show_project_on_billing', 1);
 add_option('billings_pipeline_limit', 1);
@@ -72,7 +65,6 @@ add_option('billing_send_telegram_message', 0);
 
 add_option('next_billing_number',1);
 add_option('billing_number_format',4);
-add_option('billing_prefix',1);
 
 /*
 
