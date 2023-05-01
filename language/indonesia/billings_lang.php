@@ -103,5 +103,7 @@ $lang['billing_pph'] = 'PPh';
 $lang['reseller_name'] = 'Nama Penjual';
 $lang['billing_currency'] = 'Mata uang';
 $lang['billing_add_edit_client_note'] = 'Catatan';
+$lang['billing_total_tax'] = 'PPn';
+
 
 
