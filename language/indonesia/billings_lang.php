@@ -75,7 +75,7 @@ $lang['billing_data_expiry_date']='Tanggal Kadaluarsa';
 $lang['clients_accept_billing']='Terima';
 $lang['clients_decline_billing']='Tolak';
 
-$lang['billing_note']='Rincian Pekerjaan:';
+$lang['billing_note']='Pembayaran Dapat Ditransfer Ke:';
 $lang['billings_pipeline']='Pipeline';
 $lang['billings_pipeline_sort']='Urut Berdasarkan';
 $lang['billings_sort_datecreated']='Tanggal dibuat';
