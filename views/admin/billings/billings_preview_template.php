@@ -92,7 +92,7 @@
       </div>
       <div class="row mtop10">
          <div class="col-md-3">
-            <?php echo format_billing_status($billing->status,'pull-left mright5 mtop5'); ?>
+            <span class="billing-status pull-left mright5 mtop5"></span>
          </div>
          <div class="col-md-9 text-right _buttons billing_buttons">
             <?php if(has_permission('billings','','edit')){ ?>
@@ -133,7 +133,7 @@
                     foreach($billing_statuses as $status){
                       if($billing->status != $status){ ?>
                         <li>
-                           <a href="<?php echo admin_url() . 'billings/mark_action_status/'.$status.'/'.$billing->id; ?>">
+                           <a href="#" onclick="billing_mark_as(<?php echo $status; ?>, <?php echo $billing->id ?>); return false;">
                            <?php echo _l('billing_mark_as',format_billing_status($status,'',false)); ?></a>
                         </li>
                      <?php }
@@ -540,13 +540,56 @@
 <div id="modal-wrapper"></div>
 <?php // $this->load->view('admin/billings/send_billing_to_email_template'); ?>
 <script>
-   init_btn_with_tooltips();
+     // defined in manage billings
+     billing_id = '<?php echo $billing->id; ?>';
+     billing_status = '<?php echo $billing->status; ?>';
+     //init_billing_editor();  init_btn_with_tooltips();
    init_datepicker();
    init_selectpicker();
    init_form_reminder();
    init_tabs_scrollable();
    init_billings_attach_file();
-     // defined in manage billings
-     billing_id = '<?php echo $billing->id; ?>';
-     //init_billing_editor();
+   init_billing_status(billing_status);
+ 
+
+/**
+ * Format billing status with label or not
+ * @param  mixed  $status  billing status id
+ * @param  string  $classes additional label classes
+ * @param  boolean $label   to include the label or return just translated text
+ * @return string
+ */
+function format_billing_status(status, classes = '', label = true)
+{
+
+    id = status;
+    if (status == 1) {
+        status      = "<?php echo _l('billing_status_draft'); ?>";
+        label_class = 'default';
+    } else if (status == 2) {
+        status      = "<?php echo _l('billing_status_declined'); ?>";
+        label_class = 'danger';
+    } else if (status == 3) {
+        status      = "<?php echo _l('billing_status_accepted'); ?>";
+        label_class = 'success';
+    } else if (status == 4) {
+        status      = "<?php echo _l('billing_status_sent'); ?>";
+        label_class = 'info';
+    } else if (status == 5) {
+        status      = "<?php echo _l('billing_status_expired'); ?>";
+        label_class = 'warning';
+    } else if (status == 6) {
+        status      = "<?php echo _l('billing_status_approved'); ?>";
+        label_class = 'success';
+    }
+
+    if (label == true) {
+        return '<span class="label label-' + label_class + ' ' + classes + ' s-status billing-status-' + id + '">' + status + '</span>';
+    }
+
+    return status;
+
+}
+
+
 </script>
