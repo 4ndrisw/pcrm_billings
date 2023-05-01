@@ -41,7 +41,6 @@ add_option('exclude_billing_from_client_area_with_draft_status', 1);
 
 
 add_option('predefined_client_note_billing', '
---Pembayaran Dapat Ditransfer Ke :, 
 --Nama Rekening : NAMA_AKUN,
 --Nomor Rekening : NOMOR_REKENING,
 --Nama Bank : Bank Syariah Indonesia (BSI) - Kota Serang,
