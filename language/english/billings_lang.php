@@ -97,4 +97,5 @@ $lang['billings_sort_expiry_date']='Expiry Date';
 $lang['billing_mark_as']                = 'Mark as %s';
 $lang['billing_currency'] = 'Currency';
 $lang['billing_add_edit_client_note'] = 'Client note';
+$lang['billing_total_tax'] = 'PPn';
 
