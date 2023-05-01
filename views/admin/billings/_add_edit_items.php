@@ -11,14 +11,6 @@
                <input type="radio" value="1" id="1" name="show_quantity_as" data-text="<?php echo _l('billing_table_quantity_heading'); ?>" <?php if(isset($billing) && $billing->show_quantity_as == 1){echo 'checked';}else{echo'checked';} ?>>
                <label for="1"><?php echo _l('quantity_as_qty'); ?></label>
             </div>
-            <div class="radio radio-primary radio-inline">
-               <input type="radio" value="2" id="2" name="show_quantity_as" data-text="<?php echo _l('billing_table_hours_heading'); ?>" <?php if(isset($billing) && $billing->show_quantity_as == 2){echo 'checked';} ?>>
-               <label for="2"><?php echo _l('quantity_as_hours'); ?></label>
-            </div>
-            <div class="radio radio-primary radio-inline">
-               <input type="radio" id="3" value="3" name="show_quantity_as" data-text="<?php echo _l('billing_table_quantity_heading'); ?>/<?php echo _l('billing_table_hours_heading'); ?>" <?php if(isset($billing) && $billing->show_quantity_as == 3){echo 'checked';} ?>>
-               <label for="3"><?php echo _l('billing_table_quantity_heading'); ?>/<?php echo _l('billing_table_hours_heading'); ?></label>
-            </div>
          </div>
       </div>
    </div>
