@@ -6,6 +6,8 @@ if (!$CI->db->table_exists(db_prefix() . 'billings')) {
     $CI->db->query('CREATE TABLE `' . db_prefix() . "billings` (
       `id` int NOT NULL,
       `subject` varchar(191) NOT NULL,
+      `clientid` int NOT NULL DEFAULT '0',
+      `project_id` int NOT NULL DEFAULT '0',
       `content` longtext,
       `number` int NOT NULL,
       `signed` tinyint(1) NOT NULL DEFAULT '0',
@@ -29,16 +31,21 @@ if (!$CI->db->table_exists(db_prefix() . 'billings')) {
       `taxname` varchar(40) DEFAULT NULL,
       `assigned` int DEFAULT NULL,
       `hash` varchar(32) NOT NULL,
-      `billing_to` varchar(191) DEFAULT NULL,
-      `country` int NOT NULL DEFAULT '0',
-      `zip` varchar(50) DEFAULT NULL,
-      `city` varchar(100) DEFAULT NULL,
-      `address` varchar(200) DEFAULT NULL,
+      `billing_country` int NOT NULL DEFAULT '0',
+      `billing_zip` varchar(50) DEFAULT NULL,
+      `billing_city` varchar(100) DEFAULT NULL,
+      `billing_street` varchar(200) DEFAULT NULL,
       `email` varchar(150) DEFAULT NULL,
-      `state` varchar(50) DEFAULT NULL,
+      `billing_state` varchar(50) DEFAULT NULL,
+      `include_shipping` tinyint(1) NOT NULL DEFAULT '0',
+      `shipping_street` varchar(200) DEFAULT NULL,
+      `shipping_city` varchar(100) NOT NULL,
+      `shipping_state` varchar(50) NOT NULL,
+      `shipping_country` int NOT NULL DEFAULT '0',
+      `shipping_zip` varchar(50) DEFAULT NULL,
       `phone` varchar(50) DEFAULT NULL,
       `allow_comments` tinyint(1) NOT NULL DEFAULT '1',
-      `status` TINYINT(1) NOT NULL DEFAULT '1', 
+      `status` tinyint(1) NOT NULL DEFAULT '1',
       `last_status_change` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
       `billing_id` int DEFAULT NULL,
       `invoice_id` int DEFAULT NULL,
@@ -53,7 +60,12 @@ if (!$CI->db->table_exists(db_prefix() . 'billings')) {
       `acceptance_date` datetime DEFAULT NULL,
       `acceptance_ip` varchar(40) DEFAULT NULL,
       `signature` varchar(40) DEFAULT NULL,
-      `short_link` varchar(100) DEFAULT NULL
+      `short_link` varchar(100) DEFAULT NULL,
+      `show_shipping_on_billing` tinyint(1) NOT NULL DEFAULT '0',
+      `reseller` tinyint(1) NOT NULL DEFAULT '0',
+      `reseller_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+      `pph_total` decimal(15,2) NOT NULL,
+      `pph` decimal(15,2) NOT NULL DEFAULT '0.00'
     ) ENGINE=InnoDB DEFAULT CHARSET=" . $CI->db->char_set . ';');
 
     $CI->db->query('ALTER TABLE `' . db_prefix() . 'billings`
@@ -63,8 +75,9 @@ if (!$CI->db->table_exists(db_prefix() . 'billings')) {
       ADD KEY `status` (`status`),
       ADD KEY `date` (`date`),
       ADD KEY `assigned` (`assigned`),
-      ADD KEY `billing_to` (`billing_to`),
-      ADD KEY `last_status_change` (`last_status_change`);
+      ADD KEY `last_status_change` (`last_status_change`),
+      ADD KEY `clientid` (`clientid`),
+      ADD KEY `project_id` (`project_id`);
     ');
 
     $CI->db->query('ALTER TABLE `' . db_prefix() . 'billings`
