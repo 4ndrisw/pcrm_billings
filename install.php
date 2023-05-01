@@ -64,14 +64,3 @@ add_option('billing_send_telegram_message', 0);
 
 add_option('next_billing_number',1);
 add_option('billing_number_format',4);
-
-/*
-
-
-DROP TABLE `tblbillings`;
-DROP TABLE `tblbilling_activity`, `tblbilling_comments`, `tblbilling_notes`;
-delete FROM `tbloptions` WHERE `name` LIKE '%billing%';
-DELETE FROM `tblemailtemplates` WHERE `type` LIKE 'billing';
-
-
-*/
