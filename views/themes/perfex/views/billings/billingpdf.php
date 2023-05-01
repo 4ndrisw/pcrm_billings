@@ -64,10 +64,9 @@ $left_info = $swap == '1' ? $organization_info : $customer_info;
 pdf_multi_row($left_info, $right_info, $pdf, ($dimensions['wk'] / 2) - $dimensions['lm']);
 
 $pdf->Ln(6);
-$prefix = 'Dengan Hormat, <br /><br />';
-$prefix .= 'Berdasarkan permintaan harga sertifikasi peralatan K3, berikut ini Kami sampaikan penawaran harga pekerjaan tersebut untuk '. $billing->billing_to.' dengan perincian berikut.';
+$text = '<h1>I N V O I C E</h1>';
 
-$pdf->writeHTMLCell('', '', '', '', $prefix, 0, 1, false, true, 'L', true);
+$pdf->writeHTMLCell('', '', '', '', $text, 0, 1, false, true, 'C', true);
 
 // The Table
 $pdf->Ln(hooks()->apply_filters('pdf_info_and_table_separator', 4));
@@ -133,11 +132,6 @@ if (get_option('total_to_words_enabled') == 1) {
     $pdf->SetFont($font_name, '', $font_size);
 }
 
-$pdf->Ln(4);
-$prefix = 'Demikianlah penawaran harga ini Kami sampaikan, bila diperlukan diskusi lebih lanjut terkait dengan penawaran ini bisa menghubungi nomor '. get_staff_phonenumber($billing->assigned).'  a.n '. get_staff_full_name($billing->assigned) .', atas kesempatan yang berikan, kami mengucapkan terima kasih.';
-
-$pdf->writeHTMLCell('', '', '', '', $prefix, 0, 1, false, true, 'L', true);
-
 $pdf->ln(6);
 
 /*
@@ -159,7 +153,7 @@ if ($billing->assigned != 0 && get_option('show_assigned_on_billings') == 1) {
         'module_width' => 1, // width of a single module in points
         'module_height' => 1 // height of a single module in points
      );
-    $text = format_billing_number($billing->id)  .' - ' . $billing->billing_to;
+    $text = format_billing_number($billing->id)  .' - ' . get_company_name($billing->clientid);
     $assigned_info .= $pdf->write2DBarcode($text, 'QRCODE,L', 37, $pdf->getY(), 40, 40, $style);
 
     $assigned_info .=  '<br /> <br /> <br /> <br /> <br /> <br /><br />';   
@@ -167,18 +161,7 @@ if ($billing->assigned != 0 && get_option('show_assigned_on_billings') == 1) {
 }
 $assigned_info .= '</div>';
 
-$client_info = '<div style="text-align:center;">';
-    $client_info .= strtoupper($billing->billing_to) .'<br />';
-
-if ($billing->signed != 0) {
-    $client_info .= _l('billing_signed_by') . ": {$billing->acceptance_firstname} {$billing->acceptance_lastname}" . '<br />';
-    $client_info .= _l('billing_signed_date') . ': ' . _dt($billing->acceptance_date_string) . '<br />';
-    $client_info .= _l('billing_signed_ip') . ": {$billing->acceptance_ip}" . '<br />';
-
-    $client_info .= $acceptance_path;
-    $client_info .= '<br />';
-}
-$client_info .= '</div>';
+$client_info = '';
 
 
 $left_info  = $swap == '1' ? $client_info : $assigned_info;
@@ -194,19 +177,7 @@ if (!empty($billing->note)) {
     $pdf->writeHTMLCell('', '', '', '', $billing->note, 0, 1, false, true, 'L', true);
 }
 
-if (!empty($billing->term)) {
-    $pdf->Ln(2);
-    if($pdf->getY() > 238){
-        $pdf->AddPage();
-    }
-    $pdf->SetFont($font_name, 'B', $font_size);
-    $pdf->Cell(0, 0, _l('terms_and_conditions') . ":", 0, 1, 'L', 0, '', 0);
-    $pdf->SetFont($font_name, '', $font_size);
-    $pdf->Ln(2);
-    $pdf->writeHTMLCell('', '', '', '', $billing->term, 0, 1, false, true, 'L', true);
-}
-
-$text = 'Dokumen ini diterbitkan melalui aplikasi `CRM` PT. Cipta Mas Jaya tidak memerlukan tanda tangan basah dan stempel.';
+$text = 'Dokumen ini diterbitkan melalui aplikasi `CRM` PT. Cipta Mas Jaya tidak memerlukan tanda tangan basah.';
 $pdf->Ln(2);
 $pdf->SetY('266');
 $pdf->writeHTMLCell('', '', '', '', $text, 0, 1, false, true, 'C', true);
