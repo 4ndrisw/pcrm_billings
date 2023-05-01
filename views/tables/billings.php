@@ -9,8 +9,8 @@ $aColumns = [
     'subject',
     'billing_to',
     'total',
+    'total_tax',
     'date',
-    'open_till',
     'datecreated',
     'status',
 ];
@@ -93,8 +93,8 @@ if (count($custom_fields) > 4) {
 
 $result = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, [
     'currency',
-    'rel_id',
-    'rel_type',
+    'clientid',
+    'currency',
     'invoice_id',
     'hash',
 ]);
@@ -127,16 +127,7 @@ foreach ($rResult as $aRow) {
 
     $row[] = '<a href="' . admin_url('billings/list_billings/' . $aRow[db_prefix() . 'billings.id']) . '" onclick="init_billing(' . $aRow[db_prefix() . 'billings.id'] . '); return false;">' . $aRow['subject'] . ' bb</a>';
     
-    if($aRow['rel_id'] != ''){
-        if ($aRow['rel_type'] == 'lead') {
-            $toOutput = '<a href="#" onclick="init_lead(' . $aRow['rel_id'] . ');return false;" target="_blank" data-toggle="tooltip" data-title="' . _l('lead') . '">' . $aRow['billing_to'] . '</a>';
-        } elseif ($aRow['rel_type'] == 'customer') {
-            $toOutput = '<a href="' . admin_url('clients/client/' . $aRow['rel_id']) . '" target="_blank" data-toggle="tooltip" data-title="' . _l('client') . '">' . $aRow['billing_to'] . '</a>';
-        }
-    }else{
-        $toOutput = $aRow['billing_to'];
-    }
-
+    $toOutput = '<a href="' . admin_url('clients/client/' . $aRow['clientid']) . '" target="_blank" data-toggle="tooltip" data-title="' . _l('client') . '">' . get_company_name($aRow['clientid']) . '</a>';
     $row[] = $toOutput;
 
     $amount = app_format_money($aRow['total'], ($aRow['currency'] != 0 ? get_currency($aRow['currency']) : $baseCurrency));
@@ -147,10 +138,10 @@ foreach ($rResult as $aRow) {
 
     $row[] = $amount;
 
+    $row[] = app_format_money($aRow['total_tax'], $aRow['currency']);
 
     $row[] = _d($aRow['date']);
 
-    $row[] = _d($aRow['open_till']);
 
     $row[] = _d($aRow['datecreated']);
 
