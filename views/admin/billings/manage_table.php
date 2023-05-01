@@ -109,7 +109,7 @@
                               _l('billing_total'),
                               _l('billing_total_tax'),
                               _l('billing_date'),
-                              _l('billing_date_created'),
+                              _l('reseller_name'),
                               _l('billing_status'),
                             );
 
