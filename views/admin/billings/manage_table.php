@@ -107,8 +107,8 @@
                               _l('billing_subject'),
                               _l('billing_to'),
                               _l('billing_total'),
+                              _l('billing_total_tax'),
                               _l('billing_date'),
-                              _l('billing_open_till'),
                               _l('billing_date_created'),
                               _l('billing_status'),
                             );
