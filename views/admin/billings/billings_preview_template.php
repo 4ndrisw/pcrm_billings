@@ -253,7 +253,19 @@
                            echo format_billing_info($billing,'admin'); ?>
                         </address>
                      </div>
+
+                     <div class="clearfix"></div>
+                     <?php if($billing->reseller && isset($billing->reseller_name)){ ?>
+                     <div class="col-md-6">
+                        <address>
+                           <span class="bold"><?php echo _l('reseller'); ?>:</span><br />
+                           <?php                 
+                           echo $billing->reseller_name; ?>
+                        </address>
+                     </div>
+                     <?php } ?>
                   </div>
+
                   <hr class="hr-panel-heading" />
                   <?php
                      if(count($billing->attachments) > 0){ ?>
