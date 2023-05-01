@@ -1,0 +1,59 @@
+
+.billing-update{ background-color:#ddd; }
+
+body #billing-preview .billing-items table tbody td.description span{
+    color: #d1d3ea !important;
+}
+
+.customers.viewbilling #wrapper{
+    margin-left: 0;
+}
+
+@media (max-width: 1430px){
+    .customers.viewbilling .panel_s {
+        width: 100%;
+    }
+}
+
+tr.has-row-options-2 a,
+tr.has-row-options-2,
+tr.billing_status_2 {
+    background: #004803;
+}
+
+tr.has-row-options-1 a,
+tr.has-row-options-1,
+tr.billing_status_1 {
+    background: #b7ab00;
+    color: #000;
+}
+
+.customers.billing-view #wrapper {
+    margin-left: 0;
+}
+
+body table.billing-items-preview td.description span strong{
+    color: #ececec !important;
+}
+body table.billing-items-preview td.description span {
+    color: #989898 !important;
+}
+ul.unordered-list li{
+    list-style: disc;
+    margin-left: 20px;
+}
+
+ol.ordered-list li{
+    list-style: auto;
+    margin-left: 20px;
+}
+
+.reseller_info {
+    background-color: #f5f5f5;
+    border: 1px solid #eee;
+}
+
+.reseller_info legend{
+    background-color: #ececec;
+    padding: 5px;
+}
