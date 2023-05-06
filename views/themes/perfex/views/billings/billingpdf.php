@@ -107,6 +107,12 @@ foreach ($items->taxes() as $tax) {
 </tr>';
 }
 
+if ((int)$billing->pph_total != 0) {
+    $tbltotal .= '<tr>
+    <td align="right" width="85%"><strong>' . _l('billing_pph') .' ('. $billing->pph .'%)</strong></td>
+    <td align="right" width="15%">' .'- '. app_format_money($billing->pph_total, $billing->currency_name) . '</td>
+</tr>';
+}
 if ((int)$billing->adjustment != 0) {
     $tbltotal .= '<tr>
     <td align="right" width="85%"><strong>' . _l('billing_adjustment') . '</strong></td>
@@ -123,11 +129,11 @@ $tbltotal .= '
 $tbltotal .= '</table>';
 
 $pdf->writeHTML($tbltotal, true, false, false, false, '');
-
+$numberword = $CI->numberword->convert($billing->total, $billing->currency_name);
 if (get_option('total_to_words_enabled') == 1) {
     // Set the font bold
     $pdf->SetFont($font_name, 'B', $font_size);
-    $pdf->writeHTMLCell('', '', '', '', _l('num_word') . ': ' . $CI->numberword->convert($billing->total, $billing->currency_name), 0, 1, false, true, 'C', true);
+    $pdf->writeHTMLCell('', '', '', '', _l('num_word') . ': ' . $numberword, 0, 1, false, true, 'C', true);
     // Set the font again to normal like the rest of the pdf
     $pdf->SetFont($font_name, '', $font_size);
 }
@@ -182,3 +188,81 @@ $pdf->Ln(2);
 $pdf->SetY('266');
 $pdf->writeHTMLCell('', '', '', '', $text, 0, 1, false, true, 'C', true);
 
+$pdf->AddPage();
+
+$text = '<h1>K W I T A N S I</h1>';
+$pdf->writeHTMLCell('', '', '', '', $text, 0, 1, false, true, 'C', true);
+
+
+$text = '<h2>No. '. format_billing_number($billing->id) .' </h2>';
+$pdf->writeHTMLCell('', '', '', '', $text, 0, 1, false, true, 'C', true);
+
+$pdf->Ln(6);
+
+$tblreceipt = '';
+$tblreceipt .= '<table cellpadding="6" style="padding: 5px 5px; font-size:' . ($font_size + 4) . 'px">';
+$tblreceipt .= '
+<tr>
+    <td align="left" width="40%" bgcolor="#ddd"><strong>' . _l('billing_client') . '</strong></td>
+    <td align="center" width="5%"><strong>' . ':' . '</strong></td>
+    <td align="left" width="45%">' . get_company_name($billing->clientid) . '</td>
+</tr>';
+$tblreceipt .= '
+<tr>
+    <td></td><td></td><td></td>
+</tr>';
+
+$tblreceipt .= '
+<tr>
+    <td align="left" width="40%" bgcolor="#ddd"><strong>' . _l('billing_subject') . '</strong></td>
+    <td align="center" width="5%"><strong>' . ':' . '</strong></td>
+    <td align="left" width="45%">' . $billing->subject . '<br />( Perincian Terlampir Pada Invoice )</td>
+</tr>';
+
+$tblreceipt .= '
+<tr>
+    <td></td><td></td><td></td>
+</tr>';
+
+$tblreceipt .= '
+<tr>
+    <td align="left" width="40%" bgcolor="#ddd"><strong>' . _l('billing_amount') . '</strong></td>
+    <td align="center" width="5%"><strong>' . ':' . '</strong></td>
+    <td align="left" width="45%">' . app_format_money($billing->total, $billing->currency_name) . '</td>
+</tr>';
+
+$tblreceipt .= '
+<tr>
+    <td></td><td></td><td></td>
+</tr>';
+
+$tblreceipt .= '
+<tr>
+    <td align="left" width="40%" bgcolor="#ddd"><strong>' . _l('num_word') . '</strong></td>
+    <td align="center" width="5%"><strong>' . ':' . '</strong></td>
+    <td align="left" width="45%">' . $numberword . '</td>
+</tr>';
+
+$tblreceipt .= '</table>';
+
+$pdf->writeHTML($tblreceipt, true, false, false, false, '');
+
+
+$assigned_info = '';
+
+$client_info = '<div style="text-align:center;">';
+    $client_info .= 'Serang, ' . getDay($billing->date) .' '.getMonth($billing->date).' '.getYear($billing->date) .'<br />';
+    $client_info .= get_option('invoice_company_name') . '<br />';
+    //$client_info .= $assigned_path . '<br />';
+
+
+    $client_info .=  '<br /> <br /> <br /> <br /> <br /> <br /><br />';   
+    $client_info .= get_staff_full_name($billing->assigned);
+
+$client_info .= '</div>';
+
+
+
+$left_info = $swap == '1' ? $client_info : $assigned_info;
+$right_info  = $swap == '1' ? $assigned_info : $client_info;
+pdf_multi_row($left_info, $right_info, $pdf, ($dimensions['wk'] / 2) - $dimensions['lm']);

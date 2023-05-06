@@ -79,10 +79,9 @@ $lang['billing_email']='Email';
 
 $lang['estimates_sort_pipeline']                 = 'Pipeline Order';
 
-$lang['General']='General';
-$lang['Billings']='Billings';
-$lang['billing_prefix']='prefix';
-$lang['next_billing_number_tooltip']='';
+$lang['general']='General';
+$lang['billing_prefix']='Prefix';
+$lang['next_billing_number_tooltip']='Next billing number on saved';
 $lang['due_after_help']='Set zero to avoid calculation';
 $lang['billing_number_of_date_tooltip']='';
 $lang['billing_number_format']='Number format';
@@ -110,3 +109,26 @@ $lang['settings_sales_billing_prefix'] = 'Prefix Invoice Number';
 $lang['reseller_billing'] = 'Reseller';
 $lang['use_reseller'] = 'Use Reseller ?';
 $lang['billing_reseller_help'] = 'Check this to use reseller or not ';
+
+$lang['used_qrcode_in_billing'] = 'Used QRCode in Billing?';
+
+$lang['next_billing_number'] = 'Next Billing Number';
+$lang['settings_general_iso_logo'] = 'Settings General ISO Logo';
+$lang['billing_due_after'] = 'Billing Due After';
+$lang['billing_send_telegram_message'] = 'Send telegram message';
+$lang['delete_only_on_last_billing'] = 'Delete only on last billing';
+$lang['decrement_billing_number_on_delete'] = 'Decrement billing number on delete';
+
+
+$lang['allow_staff_view_billings_assigned'] = 'Allow Staff View Billings Assigned';
+$lang['require_client_logged_in_to_view_billing'] = 'Require client logged in to view billing';
+$lang['show_assigned_on_billings'] = 'Show assigned on billings';
+$lang['show_project_on_billing'] = 'Show Project on Billing';
+$lang['default_billing_assigned_string'] = 'Default billing assigned';
+
+$lang['exclude_billing_from_client_area_with_draft_status'] = 'Exclude billing from client area with draft status';
+$lang['billing_accept_identity_confirmation'] = 'Accept identity confirmation ?';
+
+$lang['settings_general_iso_logo_tooltip'] = 'Upload ISO Logo Here';
+$lang['settings_general_iso_remove_logo_tooltip'] = 'Remove';
+$lang['used_qrcode_in_billing_help'] = 'If checked QRCode wil printed in billing';

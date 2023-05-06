@@ -899,4 +899,25 @@ class Billings extends AdminController
             $this->billings_model->update_billing_status($this->input->post());
         }
     }
+    
+    public function update_number_settings($id)
+    {
+        $response = [
+            'success' => false,
+            'message' => '',
+        ];
+        if (has_permission('billings', '', 'edit')) {
+            $this->db->where('id', $id);
+            $this->db->update(db_prefix() . 'billings', [
+                'prefix' => $this->input->post('prefix'),
+            ]);
+            if ($this->db->affected_rows() > 0) {
+                $response['success'] = true;
+                $response['message'] = _l('updated_successfully', _l('billing'));
+            }
+        }
+
+        echo json_encode($response);
+        die;
+    }
 }

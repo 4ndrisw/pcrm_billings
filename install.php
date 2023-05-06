@@ -59,8 +59,11 @@ add_option('show_project_on_billing', 1);
 add_option('billings_pipeline_limit', 1);
 add_option('default_billings_pipeline_sort', 1);
 add_option('billing_accept_identity_confirmation', 1);
+add_option('used_qrcode_in_billing', '0');
 add_option('billing_qrcode_size', '160');
 add_option('billing_send_telegram_message', 0);
 
 add_option('next_billing_number',1);
 add_option('billing_number_format',4);
+
+add_option('require_client_logged_in_to_view_billing', 1);

@@ -256,6 +256,7 @@ function billings_settings_tab()
 $CI = &get_instance();
 $CI->load->helper(BILLINGS_MODULE_NAME . '/billings');
 
+
 if(($CI->uri->segment(1)=='admin' && $CI->uri->segment(2)=='billings') || $CI->uri->segment(1)=='billings'){
     $CI->app_css->add(BILLINGS_MODULE_NAME.'-css', base_url('modules/'.BILLINGS_MODULE_NAME.'/assets/css/'.BILLINGS_MODULE_NAME.'.css'));
     $CI->app_scripts->add(BILLINGS_MODULE_NAME.'-js', base_url('modules/'.BILLINGS_MODULE_NAME.'/assets/js/'.BILLINGS_MODULE_NAME.'.js'));

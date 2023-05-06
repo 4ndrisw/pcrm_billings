@@ -54,17 +54,14 @@
          <input type="text" name="settings[billing_prefix]" class="form-control" value="<?php echo get_option('billing_prefix'); ?>">
       </div>
       <hr />
-      <i class="fa fa-question-circle pull-left" data-toggle="tooltip" data-title="<?php echo _l('next_billing_number_tooltip'); ?>"></i>
+      <i class="fa fa-question-circle pull-left mr-2" data-toggle="tooltip" data-title="<?php echo _l('next_billing_number_tooltip'); ?>"></i>
       <?php echo render_input('settings[next_billing_number]','next_billing_number',get_option('next_billing_number'), 'number', ['min'=>1]); ?>
       <hr />
-      <i class="fa fa-question-circle pull-left" data-toggle="tooltip" data-title="<?php echo _l('due_after_help'); ?>"></i>
-      <?php echo render_input('settings[billing_qrcode_size]', 'billing_qrcode_size', get_option('billing_qrcode_size')); ?>
+      <i class="fa fa-question-circle pull-left mr-2" data-toggle="tooltip" data-title="<?php echo _l('used_qrcode_in_billing_help'); ?>"></i>
+      <?php echo render_input('settings[used_qrcode_in_billing]', 'used_qrcode_in_billing', get_option('used_qrcode_in_billing')); ?>
       <hr />
-      <i class="fa fa-question-circle pull-left" data-toggle="tooltip" data-title="<?php echo _l('due_after_help'); ?>"></i>
+      <i class="fa fa-question-circle pull-left mr-2" data-toggle="tooltip" data-title="<?php echo _l('due_after_help'); ?>"></i>
       <?php echo render_input('settings[billing_due_after]','billing_due_after',get_option('billing_due_after')); ?>
-      <hr />
-      <i class="fa fa-question-circle pull-left" data-toggle="tooltip" data-title="<?php echo _l('billing_number_of_date_tooltip'); ?>"></i>
-      <?php echo render_input('settings[billing_number_of_date]','billing_number_of_date',get_option('billing_number_of_date'), 'number', ['min'=>0]); ?>
       <hr />
       <?php render_yes_no_option('billing_send_telegram_message','billing_send_telegram_message'); ?>
       <hr />

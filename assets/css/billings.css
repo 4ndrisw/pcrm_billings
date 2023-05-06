@@ -57,3 +57,7 @@ ol.ordered-list li{
     background-color: #ececec;
     padding: 5px;
 }
+
+.tooltip.fa{
+    margin-right: 2px;
+}

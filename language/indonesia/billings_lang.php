@@ -106,5 +106,9 @@ $lang['billing_add_edit_client_note'] = 'Catatan';
 $lang['billing_total_tax'] = 'PPn';
 $lang['billing_notes'] = 'Catatan';
 
+$lang['billing_client'] = 'Klien';
+$lang['billing_subject'] = 'Perihal';
+$lang['billing_amount'] = 'Jumlah';
+$lang['num_word'] = 'Terbilang';
 
 

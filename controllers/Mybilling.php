@@ -168,6 +168,6 @@ class Mybilling extends ClientsController
             $type = 'I';
         }
 
-        $pdf->Output(format_billing_number($id).'-'. $billing->billing_to . '.pdf', $type);
+        $pdf->Output(format_billing_number($id).'-'. get_company_name($billing->id)  . '.pdf', $type);
     }
 }
