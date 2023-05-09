@@ -28,10 +28,11 @@ $organization_info = '<div style="color:#424242;">';
                                 <td width="5%">:</td>
                                 <td width="70%">' .format_billing_number($billing->id) . '</td>
                             </tr>';
+    $biiling_date = getDay($billing->date) .' '.getMonth($billing->date).' '.getYear($billing->date);
     $organization_info .=  '<tr>
                                 <td width="25%"><strong>Tanggal</strong></td>
                                 <td width="5%">:</td>
-                                <td width="70%">' .getDay($billing->date) .' '.getMonth($billing->date).' '.getYear($billing->date) .'</td>
+                                <td width="70%">' . $biiling_date .'</td>
                             </tr>';
     $organization_info .=  '<tr>
                                 <td width="25%"><strong>Perihal</strong></td>
@@ -159,7 +160,7 @@ if ($billing->assigned != 0 && get_option('show_assigned_on_billings') == 1) {
         'module_width' => 1, // width of a single module in points
         'module_height' => 1 // height of a single module in points
      );
-    $text = format_billing_number($billing->id)  .' - ' . get_company_name($billing->clientid);
+    $text = format_billing_number($billing->id)  .' - ' . $biiling_date . ' - ' . get_company_name($billing->clientid);
     $assigned_info .= $pdf->write2DBarcode($text, 'QRCODE,L', 37, $pdf->getY(), 40, 40, $style);
 
     $assigned_info .=  '<br /> <br /> <br /> <br /> <br /> <br /><br />';   
@@ -170,8 +171,8 @@ $assigned_info .= '</div>';
 $client_info = '';
 
 
-$left_info  = $swap == '1' ? $client_info : $assigned_info;
-$right_info = $swap == '1' ? $assigned_info : $client_info;
+$right_info  = $swap == '1' ? $client_info : $assigned_info;
+$left_info = $swap == '1' ? $assigned_info : $client_info;
 pdf_multi_row($left_info, $right_info, $pdf, ($dimensions['wk'] / 2) - $dimensions['lm']);
 
 if (!empty($billing->note)) {
@@ -183,10 +184,6 @@ if (!empty($billing->note)) {
     $pdf->writeHTMLCell('', '', '', '', $billing->note, 0, 1, false, true, 'L', true);
 }
 
-$text = 'Dokumen ini diterbitkan melalui aplikasi `CRM` PT. Cipta Mas Jaya tidak memerlukan tanda tangan basah.';
-$pdf->Ln(2);
-$pdf->SetY('266');
-$pdf->writeHTMLCell('', '', '', '', $text, 0, 1, false, true, 'C', true);
 
 $pdf->AddPage();
 
@@ -255,14 +252,15 @@ $client_info = '<div style="text-align:center;">';
     $client_info .= get_option('invoice_company_name') . '<br />';
     //$client_info .= $assigned_path . '<br />';
 
+    $text = format_billing_number($billing->id)  .' - ' . $biiling_date . ' - ' . get_company_name($billing->clientid);
+    $assigned_info .= $pdf->write2DBarcode($text, 'QRCODE,L', 37, $pdf->getY()+7, 40, 40, $style);
 
-    $client_info .=  '<br /> <br /> <br /> <br /> <br /> <br /><br />';   
+    $client_info .=  '<br /> <br /> <br /> <br /> <br /> <br /><br /><br />';   
     $client_info .= get_staff_full_name($billing->assigned);
 
 $client_info .= '</div>';
 
 
-
 $left_info = $swap == '1' ? $client_info : $assigned_info;
-$right_info  = $swap == '1' ? $assigned_info : $client_info;
+$right_info = $swap == '1' ? $assigned_info : $client_info;
 pdf_multi_row($left_info, $right_info, $pdf, ($dimensions['wk'] / 2) - $dimensions['lm']);
