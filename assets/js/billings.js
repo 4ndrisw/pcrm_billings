@@ -722,8 +722,6 @@ function calculate_total_with_pph() {
     total = total + adjustment;
   }
 
-  console.log('--2-- ' + total);
-
   var discount_html = "-" + format_money(total_discount_calculated);
   $('input[name="discount_total"]').val(
     accounting.toFixed(total_discount_calculated, app.options.decimal_places)
@@ -748,8 +746,6 @@ function calculate_total_with_pph() {
       )
   );
 
-  console.log('--3-- ' + total);
-
   $(".total").html(
     format_money(total) +
       hidden_input(
@@ -764,3 +760,4 @@ function calculate_total_with_pph() {
 function init_billing_status(billing_status){
   $(".billing-status").html(format_billing_status(billing_status));
 }
+
