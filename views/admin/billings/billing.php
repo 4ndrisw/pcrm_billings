@@ -363,7 +363,7 @@
                                     <div class="col-md-3">
                                         <p><?php echo _l('use_reseller'); ?></p>
                                         <div class="onoffswitch">
-                                          <input type="checkbox" id="reseller" class="onoffswitch-checkbox" <?php if((isset($billing) && $billing->reseller == 1) || !isset($billing)){echo 'checked';}; ?> value="on" name="reseller">
+                                          <input type="checkbox" id="reseller" class="onoffswitch-checkbox" <?php if((isset($billing) && $billing->reseller == 1)){echo 'checked';}; ?> value="on" name="reseller">
                                           <label class="onoffswitch-label" for="reseller" data-toggle="tooltip" title="<?php echo _l('billing_reseller_help'); ?>"></label>
                                         </div>
                                     </div>
@@ -389,9 +389,6 @@
                       }
                      ?>
                     <a class="btn btn-sm btn-default" href="<?php echo $cancel; ?>"><?php echo _l('cancel'); ?></a>
-                    <button type="button" class="btn btn-info mleft10 billing-form-submit save-and-send transaction-submit">
-                        <?php echo _l('save_and_send'); ?>
-                    </button>
                     <button class="btn btn-info mleft5 billing-form-submit transaction-submit" type="button">
                       <?php echo _l('save'); ?>
                     </button>
@@ -401,7 +398,11 @@
          </div>
          <div class="col-md-12">
             <div class="panel_s">
-               <?php $this->load->view('admin/billings/_add_edit_items'); ?>
+               <?php 
+                    if(isset($billing->project_id)){
+                        $this->load->view('admin/billings/_add_edit_items'); 
+                    }
+               ?>
             </div>
          </div>
 
@@ -427,16 +428,19 @@
    var _rel_id = $('#rel_id'),
    _rel_type = $('#rel_type'),
    _rel_id_wrapper = $('#rel_id_wrapper'),
+   project_id =  $("#project_id").val(),
    data = {};
+
+   $("#task_select").append(hidden_input("project__id", project_id));
 
     init_currency();
     // Maybe items ajax search
     init_ajax_search('items','#item_select.ajax-search',undefined,admin_url+'items/search');
+    //init_ajax_search('items','#item_select.ajax-search',undefined,admin_url+'tasks/get_billable_tasks_by_project');
     validate_billing_form();
 
     // Project ajax search
     init_ajax_project_search_by_customer_id();
-    
     calculate_total_billing_with_pph();
 
    function validate_billing_form(){
@@ -453,6 +457,7 @@
        currency : 'required',
      });
    }
+
 </script>
 
 </body>
