@@ -11,6 +11,7 @@ class Billings extends AdminController
     {
         parent::__construct();
         $this->load->model('billings_model');
+        $this->load->model('tasks_model');
         $this->load->model('currencies_model');
         include_once(module_libs_path('billings') . 'mails/Billing_mail_template.php');
         //$this->load->library('module_name/library_name'); 
@@ -62,7 +63,7 @@ class Billings extends AdminController
             $data['switch_pipeline']       = true;
             $data['title']                 = _l('billings');
             $data['statuses']              = $this->billings_model->get_statuses();
-            $data['billings_sale_agents'] = $this->billings_model->get_sale_agents();
+            $data['billings_sale_agents']  = $this->billings_model->get_sale_agents();
             $data['years']                 = $this->billings_model->get_billings_years();
             
             log_activity(json_encode($data));
@@ -170,6 +171,7 @@ class Billings extends AdminController
     {
         if ($this->input->post()) {
             $billing_data = $this->input->post();
+            log_activity(json_encode($billing_data));
             if ($id == '') {
                 if (!has_permission('billings', '', 'create')) {
                     access_denied('billings');
@@ -180,7 +182,8 @@ class Billings extends AdminController
                     if ($this->set_billing_pipeline_autoload($id)) {
                         redirect(admin_url('billings'));
                     } else {
-                        redirect(admin_url('billings/list_billings/' . $id .'#' . $id));
+                        //redirect(admin_url('billings/list_billings/' . $id .'#' . $id));
+                        redirect(admin_url('billings/billing/' . $id));
                     }
                 }
             } else {
@@ -207,6 +210,8 @@ class Billings extends AdminController
                 blank_page(_l('billing_not_found'));
             }
 
+            //$data['tasks']    = $data['tasks'];
+            //$data['tasks']    = $data['tasks'];
             $data['billing']    = $data['billing'];
             $data['is_billing'] = true;
             $title               = _l('edit', _l('billing_lowercase'));
@@ -919,5 +924,32 @@ class Billings extends AdminController
 
         echo json_encode($response);
         die;
+    }
+
+    function search_task_by_project_id(){
+
+        //if ($this->input->is_ajax_request() && (has_permission('billings', '', 'edit') || has_permission('billings', '', 'create'))) {
+            /*
+            $project__id = $_REQUEST['project__id'];
+            log_activity(json_encode($project__id));
+
+            $input_post = $this->input->post();
+            log_activity(json_encode($input_post));
+            
+            $customer_id = get_client_id_by_project_id($project_id);
+            //log_activity(json_encode($this->tasks_model->get_billable_tasks($customer_id, $project_id))) ;
+            */
+
+            $this->db->select('id, name, rel_id');
+            $this->db->limit(10,20);
+            $this->db->from(db_prefix().'tasks');
+            $this->db->where('rel_type','project');
+            $query = $this->db->get()->result_array();
+            return $query;
+            //echo json_encode($this->tasks_model->get_billable_tasks($customer_id, $project__id));
+
+
+        //}
+
     }
 }
