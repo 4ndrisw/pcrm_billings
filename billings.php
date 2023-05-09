@@ -209,7 +209,7 @@ function billings_module_init_menu_items()
             'name'       => _l('billing'),
             'url'        => 'billings',
             'permission' => 'billings',
-            'icon'     => 'fa-solid fa-money-bill',
+            'icon'     => 'fa fa-cc-stripe',
             'position'   => 57,
             ]);
 
@@ -217,7 +217,7 @@ function billings_module_init_menu_items()
         $CI->app_menu->add_sidebar_menu_item('billings', [
                 'slug'     => 'billings-tracking',
                 'name'     => _l('billings'),
-                'icon'     => 'fa-solid fa-money-bill',
+                'icon'     => 'fa fa-cc-stripe',
                 'href'     => admin_url('billings'),
                 'position' => 12,
         ]);
@@ -238,7 +238,7 @@ function billings_clients_area_menu_items()
         add_theme_menu_item('billings', [
                     'name'     => _l('billings'),
                     'href'     => site_url('billings/list'),
-                    'icon'     => 'fa-solid fa-money-bill',
+                    'icon'     => 'fa fa-cc-stripe',
                     'position' => 15,
         ]);
     }
@@ -253,7 +253,7 @@ function billings_settings_tab()
     $CI = &get_instance();
     $CI->app_tabs->add_settings_tab('billings', [
         'name'     => _l('settings_group_billings'),
-        'icon'     => 'fa-solid fa-money-bill',
+        'icon'     => 'fa fa-cc-stripe',
         'view'     => 'billings/billings_settings',
         'position' => 51,
     ]);
