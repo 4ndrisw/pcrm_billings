@@ -110,5 +110,6 @@ $lang['billing_client'] = 'Klien';
 $lang['billing_subject'] = 'Perihal';
 $lang['billing_amount'] = 'Jumlah';
 $lang['num_word'] = 'Terbilang';
+$lang['compact_billing'] = 'Lihat Tagihan Ringkas';
 
 
