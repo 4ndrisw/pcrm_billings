@@ -168,6 +168,68 @@ class Mybilling extends ClientsController
             $type = 'I';
         }
 
-        $pdf->Output(format_billing_number($id).'-'. get_company_name($billing->id)  . '.pdf', $type);
+        $pdf->Output(format_billing_number($id).'-'. get_company_name($billing->clientid)  . '.pdf', $type);
     }
+
+
+    /* Generates billing PDF and senting to email  */
+    public function taggable_pdf($id)
+    {
+        $canView = user_can_view_billing($id);
+        if (!$canView) {
+            access_denied('Billings');
+        } else {
+            if (!has_permission('billings', '', 'view') && !has_permission('billings', '', 'view_own') && $canView == false) {
+                access_denied('Billings');
+            }
+        }
+        if (!$id) {
+            redirect(admin_url('billings'));
+        }
+
+        $billing        = $this->billings_model->get($id);
+        $project = get_project($billing->project_id);
+        $contract = $this->billings_model->get_contract_by_project($project);
+
+        if(count($contract)>0){
+            $billing->contract = $contract[0];
+        }
+
+        $billing_number = format_billing_number($billing->id);
+        $billing->items = $this->billings_model->get_billing_taggable_items($billing->id, $billing->project_id);
+
+        $billing->client_company = $this->clients_model->get($billing->clientid)->company;
+        $billing->acceptance_date_string = _dt($billing->acceptance_date);
+
+        try {
+            $pdf = billing_tags_pdf($billing);
+        } catch (Exception $e) {
+            $message = $e->getMessage();
+            echo $message;
+            if (strpos($message, 'Unable to get the size of the image') !== false) {
+                show_pdf_unable_to_get_image_size_error();
+            }
+            die;
+        }
+
+        $type = 'D';
+
+        if ($this->input->get('output_type')) {
+            $type = $this->input->get('output_type');
+        }
+
+        if ($this->input->get('print')) {
+            $type = 'I';
+        }
+
+        $fileNameHookData = hooks()->apply_filters('billing_file_name_admin_area', [
+                            'file_name' => mb_strtoupper(slug_it($billing_number)) . '.pdf',
+                            'billing'  => $billing,
+                        ]);
+
+
+        $pdf->Output(format_billing_number($id).'-'. get_company_name($billing->clientid)  . '.pdf', $type);
+    }
+
+
 }
