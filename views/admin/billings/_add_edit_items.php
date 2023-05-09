@@ -1,8 +1,8 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="panel-body mtop10">
-   <div class="row">
+   <div class="row mbot10">
       <div class="col-md-4">
-          <?php $this->load->view('admin/invoice_items/item_select'); ?>
+
       </div>
       <div class="col-md-8 text-right show_quantity_as_wrapper">
          <div class="mtop10">
