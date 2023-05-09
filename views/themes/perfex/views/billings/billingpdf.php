@@ -134,7 +134,7 @@ $numberword = $CI->numberword->convert($billing->total, $billing->currency_name)
 if (get_option('total_to_words_enabled') == 1) {
     // Set the font bold
     $pdf->SetFont($font_name, 'B', $font_size);
-    $pdf->writeHTMLCell('', '', '', '', _l('num_word') . ': ' . $numberword, 0, 1, false, true, 'C', true);
+    $pdf->writeHTMLCell('', '', '', '', _l('num_word') . ': ' . ucwords($numberword), 0, 1, false, true, 'C', true);
     // Set the font again to normal like the rest of the pdf
     $pdf->SetFont($font_name, '', $font_size);
 }
@@ -237,7 +237,7 @@ $tblreceipt .= '
 <tr>
     <td align="left" width="40%" bgcolor="#ddd"><strong>' . _l('num_word') . '</strong></td>
     <td align="center" width="5%"><strong>' . ':' . '</strong></td>
-    <td align="left" width="45%">' . $numberword . '</td>
+    <td align="left" width="45%">' . ucwords($numberword) . '</td>
 </tr>';
 
 $tblreceipt .= '</table>';
