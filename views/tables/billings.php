@@ -6,8 +6,8 @@ $baseCurrency = get_base_currency();
 
 $aColumns = [
     db_prefix() . 'billings.id',
-    'subject',
-    'billing_to',
+    'project_id',
+    'clientid',
     'total',
     'total_tax',
     'date',
@@ -105,12 +105,6 @@ $rResult = $result['rResult'];
 foreach ($rResult as $aRow) {
     $row = [];
 
-    //$numberOutput = '<a href="' . admin_url('billings/list_billings/' . $aRow[db_prefix() . 'billings.id']. '#' . $aRow[db_prefix() . 'billings.id']) . '" onclick="init_billing(' . $aRow[db_prefix() . 'billings.id'] . '); return false;">' . format_billing_number($aRow[db_prefix() . 'billings.id']) . '</a>';
-    //$numberOutput = '<a href="' . admin_url('billings#' . $aRow[db_prefix() . 'billings.id']) . '" target="_blank">' . format_billing_number($aRow[db_prefix() . 'billings.id']) . ' AA</a>';
-    //$numberOutput = '<a href="' . admin_url('billings/list_billings/' . $aRow[db_prefix() . 'billings.id']. '#' . $aRow[db_prefix() . 'billings.id']) . '" target="_blank">' . format_billing_number($aRow[db_prefix() . 'billings.id']) . '</a>';
-    //$numberOutput = '<a href="' . admin_url('billings/list_billings/' . $aRow[db_prefix() . 'billings.id']. '#' . $aRow[db_prefix() . 'billings.id']) . '">' . format_billing_number($aRow[db_prefix() . 'billings.id']) . '</a>';
-
-
 
     // If is from client area table
     $numberOutput = '<a href="' . admin_url('billings/list_billings/' . $aRow[db_prefix() . 'billings.id']. '#' . $aRow[db_prefix() . 'billings.id']) . '" onclick="init_billing(' . $aRow[db_prefix() . 'billings.id'] . '); return false;">' . format_billing_number($aRow[db_prefix() . 'billings.id']) . '</a>';
@@ -125,7 +119,7 @@ foreach ($rResult as $aRow) {
 
     $row[] = $numberOutput;
 
-    $row[] = '<a href="' . admin_url('billings/list_billings/' . $aRow[db_prefix() . 'billings.id']) . '" onclick="init_billing(' . $aRow[db_prefix() . 'billings.id'] . '); return false;">' . $aRow['subject'] . ' bb</a>';
+    $row[] = '<a href="' . admin_url('projects/view/' . $aRow['project_id']) . ' "target=_blank" >' . get_project_name_by_id($aRow['project_id']) . '</a>';
     
     $toOutput = '<a href="' . admin_url('clients/client/' . $aRow['clientid']) . '" target="_blank" data-toggle="tooltip" data-title="' . _l('client') . '">' . get_company_name($aRow['clientid']) . '</a>';
     $row[] = $toOutput;
