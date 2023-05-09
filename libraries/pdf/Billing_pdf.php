@@ -40,7 +40,7 @@ class Billing_pdf extends App_pdf
 
         $this->billing_number = format_billing_number($this->billing->id);
 
-        $this->SetTitle($this->billing_number .'-'. $this->billing->billing_to);
+        $this->SetTitle($this->billing_number .'-'. get_company_name($this->billing->clientid));
         $this->SetDisplayMode('default', 'OneColumn');
     }
 
