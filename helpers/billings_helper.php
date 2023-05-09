@@ -612,4 +612,15 @@ function is_sale_pph($data, $is)
 }
 
 
+/**
+ * Prepare general billing pdf
+ * @since  Version 1.0.2
+ * @param  object $billing billing as object with all necessary fields
+ * @param  string $tag tag for bulk pdf exporter
+ * @return mixed object
+ */
+function billing_tags_pdf($billing, $tag = '')
+{
+    return app_pdf('billing',  module_libs_path(BILLINGS_MODULE_NAME) . 'pdf/Billing_tags_pdf', $billing, $tag);
+}
 
