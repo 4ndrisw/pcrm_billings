@@ -85,7 +85,7 @@
                                 </div>
                                     <div class="col-md-12">
                                         <a href="#" class="edit_shipping_billing_info" data-toggle="modal"
-                                            data-target="#billing_and_shipping_details"><i class="fa fa-pen"></i></a>
+                                            data-target="#billing_and_shipping_details"><i class="fa fa-pencil"></i></a>
                                         <?php include_once(module_views_path('billings','admin/billings/billing_and_shipping_template.php')); ?>
                                     </div>
                                     <div class="col-md-6">
