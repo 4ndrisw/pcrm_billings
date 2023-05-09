@@ -101,8 +101,8 @@
             <div class="btn-group">
                <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-pdf"></i><?php if(is_mobile()){echo ' PDF';} ?> <span class="caret"></span></a>
                <ul class="dropdown-menu dropdown-menu-right">
-                  <li class="hidden-xs"><a href="<?php echo site_url('billings/pdf/'.$billing->id.'?output_type=I'); ?>"><?php echo _l('view_pdf'); ?></a></li>
                   <li class="hidden-xs"><a href="<?php echo site_url('billings/pdf/'.$billing->id.'?output_type=I'); ?>" target="_blank"><?php echo _l('view_pdf_in_new_window'); ?></a></li>
+                  <li class="hidden-xs"><a href="<?php echo site_url('billings/taggable_pdf/'.$billing->id.'?output_type=I'); ?>" target="_blank"><?php echo _l('compact_billing'); ?></a></li>
                   <li><a href="<?php echo site_url('billings/pdf/'.$billing->id); ?>"><?php echo _l('download'); ?></a></li>
                   <li>
                      <a href="<?php echo site_url('billings/pdf/'.$billing->id.'?print=true'); ?>" target="_blank">
@@ -241,7 +241,14 @@
                            </span>
                            </a>
                         </h4>
-                        <h5 class="bold mbot15 font-medium"><a href="<?php echo site_url('billings/show/'.$billing->id.'/'.$billing->hash); ?>"><?php echo $billing->subject; ?></a></h5>
+                        <h5 class="bold mbot15 font-medium"><a href="<?php echo site_url('billings/show/'.$billing->id.'/'.$billing->hash); ?>"><?php echo $billing->subject; ?></a>
+                        </h5>
+                        <h4 class="font-medium mbot15"><?php echo _l('related_to_project',array(
+                           _l('billing_lowercase'),
+                           _l('project_lowercase'),
+                           '<a href="'.admin_url('projects/view/'.$billing->project_id).'" target="_blank">' . get_project_name_by_id($billing->project_id) . '</a>',
+                           )); ?>
+                        </h4>
                         <address>
                            <?php echo format_organization_info(); ?>
                         </address>
