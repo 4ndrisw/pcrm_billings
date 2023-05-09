@@ -46,10 +46,6 @@ add_option('predefined_client_note_billing', '
 --Nama Bank : Bank Syariah Indonesia (BSI) - Kota Serang,
     ');
 
-add_option(
-
-    ');
-
 add_option('billing_due_after', 1);
 add_option('allow_staff_view_billings_assigned', 1);
 add_option('show_assigned_on_billings', 1);
