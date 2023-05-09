@@ -91,7 +91,7 @@ class Billings_model extends App_Model
         }
 
         if ($this->copy == false) {
-            $data['content'] = '{billing_items}';
+            $data['content'] = '{itemable}';
         }
 
         $hook = hooks()->apply_filters('before_create_billing', [
@@ -154,13 +154,6 @@ class Billings_model extends App_Model
                 }
             }
 
-            if ($data['rel_type'] == 'lead') {
-                $this->load->model('leads_model');
-                $this->leads_model->log_lead_activity($data['rel_id'], 'not_lead_activity_created_billing', false, serialize([
-                    '<a href="' . admin_url('billings/list_billings/' . $insert_id) . '" target="_blank">' . $data['subject'] . '</a>',
-                ]));
-            }
-
             update_sales_total_tax_column($insert_id, 'billing', db_prefix() . 'billings');
 
             log_activity('New Billing Created [ID: ' . $insert_id . ']');
@@ -168,6 +161,8 @@ class Billings_model extends App_Model
             if ($save_and_send === true) {
                 $this->send_billing_to_email($insert_id);
             }
+
+            $this->add_itemable($insert_id, $data['project_id']);
 
             hooks()->do_action('billing_created', $insert_id);
 
@@ -262,6 +257,7 @@ class Billings_model extends App_Model
         unset($data['rate']);
         unset($data['taxname']);
         unset($data['save_and_send']);
+        unset($data['task_select']);
 
         /*
         var_dump($data['pph_total']);
@@ -290,6 +286,9 @@ class Billings_model extends App_Model
                         pusher_trigger_notification([$billing_now->assigned]);
                     }
                 }
+            }
+            if($current_billing->project_id != $billing_now->project_id){
+                $this->change_billing_project_id($id, $current_billing->project_id,$billing_now->project_id);
             }
         }
 
@@ -762,6 +761,7 @@ class Billings_model extends App_Model
             'status',
             'invoice_id',
             'billing_id',
+            'number',
             'is_expiry_notified',
             'date_converted',
             'signature',
@@ -782,7 +782,8 @@ class Billings_model extends App_Model
         $insert_data['addedfrom']   = get_staff_user_id();
         $insert_data['datecreated'] = date('Y-m-d H:i:s');
         $insert_data['date']        = _d(date('Y-m-d'));
-        $insert_data['status']      = 6;
+        $insert_data['number']      = get_option('next_billing_number');
+        $insert_data['status']      = 1;
         $insert_data['hash']        = app_generate_hash();
 
         // in case open till is expired set new 7 days starting from current date
@@ -793,6 +794,8 @@ class Billings_model extends App_Model
         $insert_data['newitems'] = [];
         $custom_fields_items     = get_custom_fields('items');
         $key                     = 1;
+        
+        /*
         foreach ($billing->items as $item) {
             $insert_data['newitems'][$key]['description']      = $item['description'];
             $insert_data['newitems'][$key]['long_description'] = clear_textarea_breaks($item['long_description']);
@@ -815,6 +818,7 @@ class Billings_model extends App_Model
             }
             $key++;
         }
+        */
 
         $id = $this->add($insert_data);
 
@@ -835,6 +839,8 @@ class Billings_model extends App_Model
 
             $tags = get_tags_in($billing->id, 'billing');
             handle_tags_save($tags, $id, 'billing');
+            
+            $this->add_itemable($id, $billing->project_id);
 
             log_activity('Copied Billing ' . format_billing_number($billing->id));
 
@@ -1247,4 +1253,85 @@ class Billings_model extends App_Model
             'additional_data' => $additional_data,
         ]);
     }
+
+    public function add_itemable($billing_id, $project_id){
+
+        $this->db->select(db_prefix() . 'tasks.id AS task_id');
+        $this->db->select(db_prefix() . 'tasks.name AS task_name');
+        $this->db->where(db_prefix() . 'tasks.rel_id', $project_id);
+        $this->db->where(db_prefix() . 'itemable.task_id', NULL, FALSE);
+
+        $this->db->where(db_prefix() . 'tasks.rel_type', 'project');
+        $this->db->join(db_prefix() . 'itemable', db_prefix() . 'itemable.task_id = ' . db_prefix() . 'tasks.id', 'LEFT');
+
+        $query = $this->db->get(db_prefix().'tasks');
+        
+        $i = 0;
+        $data = [];
+        foreach ($query->result_array() as $row)
+        {
+            $i++;
+            $record['rel_id'] = $billing_id;
+            $record['rel_type'] = 'billing';
+            $record['description'] = $row['task_name'];
+            $record['qty'] = 1;
+            $record['item_order'] = $i;
+            $record['project_id'] = $project_id;
+            $record['task_id'] = $row['task_id'];
+            log_activity(json_encode($row));
+            $data[] = $record;
+        }
+        if(!empty($data)){
+            $this->db->insert_batch(db_prefix().'itemable', $data);
+        }
+    }
+
+    public function change_billing_project_id($billing_id, $old_project_id, $new_project_id){
+        $this->db->where('rel_id', $billing_id);
+        $this->db->delete(db_prefix() . 'itemable');
+
+        $this->add_itemable($billing_id, $new_project_id);
+
+    }
+
+  public function get_billing_taggable_items($billing_id, $project_id){
+
+        $this->db->select([db_prefix() . 'tags.name AS tags_name', 'COUNT('.db_prefix() . 'tags.name) AS count',
+            db_prefix() . 'itemable.rate AS price', db_prefix() . 'item_tax.taxname', db_prefix() . 'item_tax.taxrate']);
+
+        $this->db->join(db_prefix() . 'tasks', db_prefix() . 'tasks.id = ' . db_prefix() . 'itemable.task_id', 'left');
+        $this->db->join(db_prefix() . 'item_tax', db_prefix() . 'item_tax.itemid = ' . db_prefix() . 'itemable.id', 'left');
+        $this->db->join(db_prefix() . 'projects', db_prefix() . 'tasks.rel_id = ' . db_prefix() . 'projects.id', 'left');
+        $this->db->join(db_prefix() . 'taggables', db_prefix() . 'taggables.rel_id = ' . db_prefix() . 'tasks.id', 'left');
+        $this->db->join(db_prefix() . 'tags', db_prefix() . 'taggables.tag_id = ' . db_prefix() . 'tags.id', 'left');
+
+        $this->db->group_by([db_prefix() . 'tags.name', db_prefix() . 'itemable.rate', db_prefix() . 'item_tax.taxname', db_prefix() . 'item_tax.taxrate']);
+
+        $this->db->where(db_prefix() . 'tasks.rel_id =' . $project_id);
+        $this->db->where(db_prefix() . 'tasks.rel_type = ' . "'project'");
+        $this->db->where(db_prefix() . 'itemable.rel_id =' . $billing_id);
+
+        //return $this->db->get_compiled_select(db_prefix() . 'itemable');
+        return $this->db->get(db_prefix() . 'itemable')->result_array();
+    }
+    
+    public function get_contract_by_project($project=null){
+        
+        if(is_null($project->name)){
+            return '';
+        }else{
+        
+        $list = explode(' ',$project->name);
+        $project_name = $list[0];
+
+        $this->db->select([db_prefix() . 'contracts.*']);
+        $this->db->where(db_prefix() . 'contracts.subject ="' . $project_name .'"');
+        $this->db->where(db_prefix() . 'contracts.client =' . $project->clientid);
+        
+        //return $this->db->get_compiled_select(db_prefix() . 'contracts');
+        return $this->db->get(db_prefix() . 'contracts')->result();
+
+        }
+    }
+
 }
