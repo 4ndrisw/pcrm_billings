@@ -30,6 +30,7 @@ hooks()->add_filter('global_search_result_query', 'billings_global_search_result
 hooks()->add_filter('global_search_result_output', 'billings_global_search_result_output', 10, 2);
 hooks()->add_filter('get_dashboard_widgets', 'billings_add_dashboard_widget');
 hooks()->add_filter('module_billings_action_links', 'module_billings_action_links');
+//hooks()->add_filter('billing_html_pdf_data', 'taggable_billing_html_pdf_data');
 
 
 function billings_add_dashboard_widget($widgets)
@@ -138,6 +139,7 @@ function billings_module_activation_hook()
     require_once(__DIR__ . '/install.php');
     //ALTER TABLE `tblitemable` ADD `task_id` INT NULL DEFAULT NULL 
       $CI->db->query('ALTER TABLE `' . db_prefix() . 'itemable` ADD `task_id` INT NULL DEFAULT NULL');
+      $CI->db->query('ALTER TABLE `' . db_prefix() . 'itemable` ADD `project_id` INT NULL DEFAULT NULL');
 }
 
 /**
@@ -171,6 +173,10 @@ function billings_module_deactivation_hook()
    $CI->db->query('DELETE FROM `' . db_prefix() . 'item_tax` WHERE `rel_type` LIKE "%billing%"');
    $CI->db->query('DELETE FROM `' . db_prefix() . 'reminders` WHERE `rel_type` LIKE "%billing%"');
    $CI->db->query('DELETE FROM `' . db_prefix() . 'emailtemplates` WHERE `name` LIKE "%billing%"');
+
+   $CI->db->query('ALTER TABLE `' . db_prefix() . 'itemable` DROP `task_id`');
+   $CI->db->query('ALTER TABLE `' . db_prefix() . 'itemable` DROP `project_id`');
+
 
     // billings
     
