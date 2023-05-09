@@ -99,7 +99,7 @@
             <a href="<?php echo admin_url('billings/billing/'.$billing->id); ?>" data-placement="left" data-toggle="tooltip" title="<?php echo _l('billing_edit'); ?>" class="btn btn-default btn-with-tooltip" data-placement="bottom"><i class="fa fa-pencil-square"></i></a>
             <?php } ?>
             <div class="btn-group">
-               <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-pdf"></i><?php if(is_mobile()){echo ' PDF';} ?> <span class="caret"></span></a>
+               <a href="#" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-file-pdf-o"></i><?php if(is_mobile()){echo ' PDF';} ?> <span class="caret"></span></a>
                <ul class="dropdown-menu dropdown-menu-right">
                   <li class="hidden-xs"><a href="<?php echo site_url('billings/pdf/'.$billing->id.'?output_type=I'); ?>" target="_blank"><?php echo _l('view_pdf_in_new_window'); ?></a></li>
                   <li class="hidden-xs"><a href="<?php echo site_url('billings/taggable_pdf/'.$billing->id.'?output_type=I'); ?>" target="_blank"><?php echo _l('compact_billing'); ?></a></li>
