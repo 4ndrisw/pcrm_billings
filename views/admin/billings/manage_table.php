@@ -15,10 +15,11 @@
                foreach($years as $year){
                 echo form_hidden('year_'.$year['year'],$year['year']);
                }
+               echo form_hidden('reseller');
                echo form_hidden('leads_related');
                echo form_hidden('customers_related');
                echo form_hidden('expired');
-               ?>
+            ?>
          </div>
          <div class="col-md-12">
             <div class="panel_s mbot10">
@@ -75,8 +76,8 @@
                            <div class="clearfix"></div>
                            <li class="divider"></li>
                            <li>
-                              <a href="#" data-cview="expired" onclick="dt_custom_view('expired','.table-billings','expired'); return false;">
-                              <?php echo _l('billing_expired'); ?>
+                              <a href="#" data-cview="reseller" onclick="dt_custom_view('reseller','.table-billings','reseller'); return false;">
+                              <?php echo _l('reseller'); ?>
                               </a>
                            </li>
                            <li>
