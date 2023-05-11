@@ -21,6 +21,10 @@ $sTable       = db_prefix() . 'billings';
 $where  = [];
 $filter = [];
 
+if ($this->ci->input->post('reseller')) {
+    array_push($filter, 'AND reseller = "1"');
+}
+
 if ($this->ci->input->post('leads_related')) {
     array_push($filter, 'OR rel_type="lead"');
 }
@@ -105,7 +109,6 @@ $rResult = $result['rResult'];
 foreach ($rResult as $aRow) {
     $row = [];
 
-
     // If is from client area table
     $numberOutput = '<a href="' . admin_url('billings/list_billings/' . $aRow[db_prefix() . 'billings.id']. '#' . $aRow[db_prefix() . 'billings.id']) . '" onclick="init_billing(' . $aRow[db_prefix() . 'billings.id'] . '); return false;">' . format_billing_number($aRow[db_prefix() . 'billings.id']) . '</a>';
 
@@ -135,7 +138,6 @@ foreach ($rResult as $aRow) {
     $row[] = ($aRow['total_tax'] > 0) ? app_format_money($aRow['total_tax'], $aRow['currency']) : NULL;
 
     $row[] = _d($aRow['date']);
-
 
     $row[] = $aRow['reseller_name'];
 
