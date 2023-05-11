@@ -171,7 +171,7 @@ class Billings extends AdminController
     {
         if ($this->input->post()) {
             $billing_data = $this->input->post();
-            log_activity(json_encode($billing_data));
+
             if ($id == '') {
                 if (!has_permission('billings', '', 'create')) {
                     access_denied('billings');
