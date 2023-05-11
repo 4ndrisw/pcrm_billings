@@ -94,6 +94,14 @@ class Billings_model extends App_Model
             $data['content'] = '{itemable}';
         }
 
+        if(isset($data['include_shipping'])){
+            $data['include_shipping'] = 1;
+        }
+        
+        if(isset($data['show_shipping_on_billing'])){
+            $data['show_shipping_on_billing'] = 1;
+        }
+        
         $hook = hooks()->apply_filters('before_create_billing', [
             'data'  => $data,
             'items' => $items,
@@ -259,6 +267,14 @@ class Billings_model extends App_Model
         unset($data['save_and_send']);
         unset($data['task_select']);
 
+        if(isset($data['include_shipping'])){
+            $data['include_shipping'] = 1;
+        }
+        
+        if(isset($data['show_shipping_on_billing'])){
+            $data['show_shipping_on_billing'] = 1;
+        }
+        
         /*
         var_dump($data['pph_total']);
         var_dump($data['adjustment']);
