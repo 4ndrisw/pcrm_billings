@@ -327,6 +327,7 @@ function validate_billing_form(selector) {
             }
         },
         date: 'required',
+        project_id: 'required',
         number: {
             required: true
         }
