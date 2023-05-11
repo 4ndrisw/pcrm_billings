@@ -639,6 +639,7 @@ class Billings extends AdminController
         if ($this->input->post()) {
             echo json_encode([
                 'success' => $this->billings_model->add_comment($this->input->post()),
+                'message' => _l('comment_add_successfully'),
             ]);
         }
     }
