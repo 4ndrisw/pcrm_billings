@@ -104,7 +104,7 @@
                         <?php
                            $table_data = array(
                               _l('billing') . ' #',
-                              _l('billing_subject'),
+                              _l('projects'),
                               _l('billing_to'),
                               _l('billing_total'),
                               _l('billing_total_tax'),
