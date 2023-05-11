@@ -473,16 +473,28 @@ if (!function_exists('format_billing_info')) {
             $phone = '<a href="tel:' . $billing->phone . '">' . $billing->phone . '</a>';
             $email = '<a href="mailto:' . $billing->email . '">' . $billing->email . '</a>';
         }
+        
+        $billingStreet = $billing->billing_street;
+        $billingCity = $billing->billing_city;
+        $billingState = $billing->billing_state;
+        $billingZip = $billing->billing_zip;
+
+        if($billing->include_shipping && $billing->show_shipping_on_billing){
+            $billingStreet = $billing->shipping_street;
+            $billingCity = $billing->shipping_city;
+            $billingState = $billing->shipping_state;
+            $billingZip = $billing->shipping_zip;
+        }
 
         $format = _info_format_replace('company_name', $billingTo, $format);
-        $format = _info_format_replace('street', $billing->billing_street, $format);
-        $format = _info_format_replace('city', $billing->billing_city, $format);
-        $format = _info_format_replace('state', $billing->billing_state, $format);
+        $format = _info_format_replace('street', $billingStreet, $format);
+        $format = _info_format_replace('city', $billingCity, $format);
+        $format = _info_format_replace('state', $billingState, $format);
 
         $format = _info_format_replace('country_code', $countryCode, $format);
         $format = _info_format_replace('country_name', $countryName, $format);
 
-        $format = _info_format_replace('zip_code', $billing->billing_zip, $format);
+        $format = _info_format_replace('zip_code', $billingZip, $format);
         $format = _info_format_replace('phone', $phone, $format);
         $format = _info_format_replace('email', $email, $format);
 
