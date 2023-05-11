@@ -477,7 +477,7 @@
                         <div id="billing-comments"></div>
                         <div class="clearfix"></div>
                         <textarea name="content" id="comment" rows="4" class="form-control mtop15 billing-comment"></textarea>
-                        <button type="button" class="btn btn-info mtop10 pull-right" onclick="add_billing_comment();"><?php echo _l('billing_add_comment'); ?></button>
+                        <button type="button" class="btn btn-info mtop10 pull-right" onclick="add_billing_comment(); return false;"><?php echo _l('billing_add_comment'); ?></button>
                      </div>
                   </div>
                </div>
@@ -488,7 +488,7 @@
                      <div class="col-md-12">
                         <div class="clearfix"></div>
                         <textarea name="content" id="note" rows="4" class="form-control mtop15 billing-note"></textarea>
-                        <button type="button" class="btn btn-info mtop10 pull-right" onclick="add_billing_note();"><?php echo _l('billing_add_note'); ?></button>
+                        <button type="button" class="btn btn-info mtop10 pull-right" onclick="add_billing_note(); return false;"><?php echo _l('billing_add_note'); ?></button>
                      </div>
                   </div>
 
