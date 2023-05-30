@@ -111,5 +111,6 @@ $lang['billing_subject'] = 'Perihal';
 $lang['billing_amount'] = 'Jumlah';
 $lang['num_word'] = 'Terbilang';
 $lang['compact_billing'] = 'Lihat Tagihan Ringkas';
+$lang['print_billing_header_footer'] = 'Cetak billing header dan footer';
 
 
