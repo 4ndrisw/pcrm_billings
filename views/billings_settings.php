@@ -63,6 +63,8 @@
       <i class="fa fa-question-circle pull-left mr-2" data-toggle="tooltip" data-title="<?php echo _l('due_after_help'); ?>"></i>
       <?php echo render_input('settings[billing_due_after]','billing_due_after',get_option('billing_due_after')); ?>
       <hr />
+      <?php render_yes_no_option('print_billing_header_footer','print_billing_header_footer'); ?>
+      <hr />
       <?php render_yes_no_option('billing_send_telegram_message','billing_send_telegram_message'); ?>
       <hr />
       <?php render_yes_no_option('delete_only_on_last_billing','delete_only_on_last_billing'); ?>
