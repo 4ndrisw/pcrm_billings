@@ -47,6 +47,10 @@ class Billing_pdf extends App_pdf
     //Page header
     public function Header() {
 
+        if(get_option('print_billing_header_footer') == 0){
+            return;    
+        }
+
         $dimensions = $this->getPageDimensions();
 
         $billing                = hooks()->apply_filters('billing_html_pdf_data', $this->billing);
@@ -110,6 +114,11 @@ class Billing_pdf extends App_pdf
 
     // Page footer
     public function Footer() {
+        
+        if(get_option('print_billing_header_footer') == 0){
+            return;    
+        }
+
         // Position at 15 mm from bottom
         $this->SetY(-25);
         // Set font
