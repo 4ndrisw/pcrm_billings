@@ -133,3 +133,5 @@ $lang['settings_general_iso_logo_tooltip'] = 'Upload ISO Logo Here';
 $lang['settings_general_iso_remove_logo_tooltip'] = 'Remove';
 $lang['used_qrcode_in_billing_help'] = 'If checked QRCode wil printed in billing';
 $lang['compact_billing'] = 'View Compact Billing';
+$lang['print_billing_header_footer'] = 'Print billing header and footer';
+
