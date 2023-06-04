@@ -47,6 +47,7 @@ class Billings_model extends App_Model
     {
         $data['allow_comments'] = isset($data['allow_comments']) ? 1 : 0;
         $data['reseller'] = isset($data['reseller']) ? 1 : 0;
+        $data['billing_equal_with_receipt'] = isset($data['billing_equal_with_receipt']) ? 1 : 0;
 
         $save_and_send = isset($data['save_and_send']);
 
@@ -197,6 +198,7 @@ class Billings_model extends App_Model
 
         $data['allow_comments'] = isset($data['allow_comments']) ? 1 : 0;
         $data['reseller'] = isset($data['reseller']) ? 1 : 0;
+        $data['billing_equal_with_receipt'] = isset($data['billing_equal_with_receipt']) ? 1 : 0;
 
         $current_billing = $this->get($id);
 

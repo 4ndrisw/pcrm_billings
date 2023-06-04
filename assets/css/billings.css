@@ -58,6 +58,19 @@ ol.ordered-list li{
     padding: 5px;
 }
 
+.billing_equal_with_receipt_info {
+    background-color: #7f87bf;
+    border: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-top: 10px;
+}
+
+.billing_equal_with_receipt_info legend{
+    color: #fefefe;
+    background-color: #001991;
+    padding: 5px;
+}
+
 .tooltip.fa{
     margin-right: 2px;
 }

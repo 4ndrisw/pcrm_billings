@@ -135,3 +135,5 @@ $lang['used_qrcode_in_billing_help'] = 'If checked QRCode wil printed in billing
 $lang['compact_billing'] = 'View Compact Billing';
 $lang['print_billing_header_footer'] = 'Print billing header and footer';
 
+$lang['billing_equal_with_receipt_billing'] = 'When used pph billing equal with receipt ?';
+$lang['use_billing_equal_with_receipt'] = 'Billing equal with receipt ?';

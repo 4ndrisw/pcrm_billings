@@ -373,9 +373,27 @@
                                     echo '</div>';
                                     echo form_fieldset_close();
                                ?>
-
                            </div>
 
+                           <div class="col-md-12">
+                               <?php $attributes = array(
+                                            'id'    => 'billing_equal_with_receipt_wrapper',
+                                            'class' => 'billing_equal_with_receipt_info'
+                                    );
+
+                                    echo form_fieldset(_l('billing_equal_with_receipt_billing'), $attributes);
+                                ?>                                
+                                <div class="col-md-3">
+                                    <p><?php echo _l('use_billing_equal_with_receipt'); ?></p>
+                                    <div class="onoffswitch">
+                                      <input type="checkbox" id="billing_equal_with_receipt" class="onoffswitch-checkbox" <?php if((isset($billing) && $billing->billing_equal_with_receipt == 1)){echo 'checked';}; ?> value="on" name="billing_equal_with_receipt">
+                                      <label class="onoffswitch-label" for="billing_equal_with_receipt" data-toggle="tooltip" title="<?php echo _l('billing_billing_equal_with_receipt_help'); ?>"></label>
+                                    </div>
+                                </div>
+                                <?php
+                                    echo form_fieldset_close();
+                                ?>
+                           </div>
 
                         </div>
                      </div>

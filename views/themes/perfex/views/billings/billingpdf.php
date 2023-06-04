@@ -111,7 +111,7 @@ foreach ($items->taxes() as $tax) {
 if ((int)$billing->pph_total != 0) {
     $tbltotal .= '<tr>
     <td align="right" width="85%"><strong>' . _l('billing_pph') .' ('. $billing->pph .'%)</strong></td>
-    <td align="right" width="15%">' .'- '. app_format_money($billing->pph_total, $billing->currency_name) . '</td>
+    <td align="right" width="15%">' .'- '. app_format_money($billing->subtotal*$billing->pph/100, $billing->currency_name) . '</td>
 </tr>';
 }
 if ((int)$billing->adjustment != 0) {
@@ -120,17 +120,22 @@ if ((int)$billing->adjustment != 0) {
     <td align="right" width="15%">' . app_format_money($billing->adjustment, $billing->currency_name) . '</td>
 </tr>';
 }
+if($billing->billing_equal_with_receipt){
+    $billing_pph_total = $billing->total;    
+}else{
+    $billing_pph_total = $billing->total - $billing->subtotal*$billing->pph/100;
+}
 
 $tbltotal .= '
 <tr style="background-color:#f0f0f0;">
     <td align="right" width="85%"><strong>' . _l('billing_total') . '</strong></td>
-    <td align="right" width="15%">' . app_format_money($billing->total, $billing->currency_name) . '</td>
+    <td align="right" width="15%">' . app_format_money($billing_pph_total, $billing->currency_name) . '</td>
 </tr>';
 
 $tbltotal .= '</table>';
 
 $pdf->writeHTML($tbltotal, true, false, false, false, '');
-$numberword = $CI->numberword->convert($billing->total, $billing->currency_name);
+$numberword = $CI->numberword->convert($billing_pph_total, $billing->currency_name);
 if (get_option('total_to_words_enabled') == 1) {
     // Set the font bold
     $pdf->SetFont($font_name, 'B', $font_size);
@@ -220,12 +225,13 @@ $tblreceipt .= '
 <tr>
     <td></td><td></td><td></td>
 </tr>';
+$total_receipt = $billing->total;
 
 $tblreceipt .= '
 <tr>
     <td align="left" width="40%" bgcolor="#ddd"><strong>' . _l('billing_amount') . '</strong></td>
     <td align="center" width="5%"><strong>' . ':' . '</strong></td>
-    <td align="left" width="45%">' . app_format_money($billing->total, $billing->currency_name) . '</td>
+    <td align="left" width="45%">' . app_format_money($total_receipt, $billing->currency_name) . '</td>
 </tr>';
 
 $tblreceipt .= '
@@ -233,11 +239,13 @@ $tblreceipt .= '
     <td></td><td></td><td></td>
 </tr>';
 
+$numberword_total_receipt = $CI->numberword->convert($billing->total, $billing->currency_name);
+
 $tblreceipt .= '
 <tr>
     <td align="left" width="40%" bgcolor="#ddd"><strong>' . _l('num_word') . '</strong></td>
     <td align="center" width="5%"><strong>' . ':' . '</strong></td>
-    <td align="left" width="45%">' . ucwords($numberword) . '</td>
+    <td align="left" width="45%">' . ucwords($numberword_total_receipt) . '</td>
 </tr>';
 
 $tblreceipt .= '</table>';

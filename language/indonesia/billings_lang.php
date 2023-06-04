@@ -113,4 +113,5 @@ $lang['num_word'] = 'Terbilang';
 $lang['compact_billing'] = 'Lihat Tagihan Ringkas';
 $lang['print_billing_header_footer'] = 'Cetak billing header dan footer';
 
-
+$lang['billing_equal_with_receipt_billing'] = 'Aapakah jika menggunakan pph invoice sama dengan kwitansi ?';
+$lang['use_billing_equal_with_receipt'] = 'Invoice sama dengan kwitansi';
