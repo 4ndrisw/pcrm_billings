@@ -96,11 +96,11 @@ $lang['billings_sort_expiry_date']='Expiry Date';
 $lang['billing_mark_as']                = 'Mark as %s';
 $lang['billing_currency'] = 'Currency';
 $lang['billing_add_edit_client_note'] = 'Client note';
-$lang['billing_total_tax'] = 'PPn';
+$lang['billing_total_tax'] = 'PPN';
 $lang['billing_notes'] = 'Notes';
 $lang['reseller'] = 'Reseller';
 $lang['reseller_name'] = 'Reseller name';
-$lang['billing_pph'] = 'PPh';
+$lang['billing_pph'] = 'PPH';
 
 $lang['billing_select_customer'] = 'Client';
 $lang['show_shipping_on_billing'] = 'Show Shipping on Invoice';

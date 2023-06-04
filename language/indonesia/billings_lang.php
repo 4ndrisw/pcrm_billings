@@ -99,11 +99,11 @@ $lang['settings_sales_billing_prefix'] = 'Awalan Nomor Invoice';
 $lang['reseller_billing'] = 'Reseller';
 $lang['use_reseller'] = 'Menggunakan Reseller ?';
 $lang['billing_reseller_help'] = 'Ceklist disini untuk menggunakan reseller atau tidak';
-$lang['billing_pph'] = 'PPh';
+$lang['billing_pph'] = 'PPH';
 $lang['reseller_name'] = 'Nama Penjual';
 $lang['billing_currency'] = 'Mata uang';
 $lang['billing_add_edit_client_note'] = 'Catatan';
-$lang['billing_total_tax'] = 'PPn';
+$lang['billing_total_tax'] = 'PPN';
 $lang['billing_notes'] = 'Catatan';
 
 $lang['billing_client'] = 'Klien';
