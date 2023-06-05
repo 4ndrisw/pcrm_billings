@@ -6,13 +6,14 @@ $baseCurrency = get_base_currency();
 
 $aColumns = [
     db_prefix() . 'billings.id',
-    'project_id',
-    'clientid',
+    db_prefix() . 'projects.name',
+//    'clientid',
+    db_prefix() . 'clients.company',
     'total',
     'total_tax',
     'date',
     'reseller_name',
-    'status',
+    db_prefix() . 'billings.status',
 ];
 
 $sIndexColumn = 'id';
@@ -77,7 +78,13 @@ if (!has_permission('billings', '', 'view')) {
     array_push($where, 'AND ' . get_billings_sql_where_staff(get_staff_user_id()));
 }
 
-$join          = [];
+//$join          = [];
+
+$join = [
+    'LEFT JOIN ' . db_prefix() . 'clients ON ' . db_prefix() . 'clients.userid = ' . db_prefix() . 'billings.clientid',
+    'LEFT JOIN ' . db_prefix() . 'projects ON ' . db_prefix() . 'projects.id = ' . db_prefix() . 'billings.project_id',
+];
+
 $custom_fields = get_table_custom_fields('billing');
 
 foreach ($custom_fields as $key => $field) {
@@ -97,7 +104,8 @@ if (count($custom_fields) > 4) {
 
 $result = data_tables_init($aColumns, $sIndexColumn, $sTable, $join, $where, [
     'currency',
-    'clientid',
+    'project_id',
+    db_prefix() . 'billings.clientid',
     'currency',
     'invoice_id',
     'hash',
@@ -122,9 +130,9 @@ foreach ($rResult as $aRow) {
 
     $row[] = $numberOutput;
 
-    $row[] = '<a href="' . admin_url('projects/view/' . $aRow['project_id']) . ' "target=_blank" >' . get_project_name_by_id($aRow['project_id']) . '</a>';
+    $row[] = '<a href="' . admin_url('projects/view/' . $aRow['project_id']) . ' "target=_blank" >' . $aRow[db_prefix() . 'projects.name'] . '</a>';
     
-    $toOutput = '<a href="' . admin_url('clients/client/' . $aRow['clientid']) . '" target="_blank" data-toggle="tooltip" data-title="' . _l('client') . '">' . get_company_name($aRow['clientid']) . '</a>';
+    $toOutput = '<a href="' . admin_url('clients/client/' . $aRow['clientid']) . '" target="_blank" data-toggle="tooltip" data-title="' . _l('client') . '">' . $aRow[db_prefix() . 'clients.company'] . '</a>';
     $row[] = $toOutput;
 
     $amount = app_format_money($aRow['total'], ($aRow['currency'] != 0 ? get_currency($aRow['currency']) : $baseCurrency));
@@ -150,7 +158,7 @@ foreach ($rResult as $aRow) {
 
                     $span .= '<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="tableLeadsStatus-' . $aRow[db_prefix() . 'billings.id'] . '">';
                     foreach ($statuses as $billingChangeStatus) {
-                        if ($aRow['status'] != $billingChangeStatus) {
+                        if ($aRow[db_prefix() . 'billings.status'] != $billingChangeStatus) {
                             $span .= '<li>
                           <a href="#" onclick="billing_mark_as(' . $billingChangeStatus . ',' . $aRow[db_prefix() . 'billings.id'] . '); return false;">
                              ' . format_billing_status($billingChangeStatus) . '
@@ -165,24 +173,24 @@ foreach ($rResult as $aRow) {
 
             $outputStatus = '<span class="label label-danger inline-block">' . _l('billing_status_draft') . $span;
 
-            if ($aRow['status'] == 1) {
+            if ($aRow[db_prefix() . 'billings.status'] == 1) {
                 $outputStatus = '<span class="label label-default inline-block">' . _l('billing_status_draft') . $span;
-            } elseif ($aRow['status'] == 2) {
+            } elseif ($aRow[db_prefix() . 'billings.status'] == 2) {
                 $outputStatus = '<span class="label label-danger inline-block">' . _l('billing_status_declined') . $span;
-            } elseif ($aRow['status'] == 3) {
+            } elseif ($aRow[db_prefix() . 'billings.status'] == 3) {
                 $outputStatus = '<span class="label label-success inline-block">' . _l('billing_status_accepted') . $span;
-            } elseif ($aRow['status'] == 4) {
+            } elseif ($aRow[db_prefix() . 'billings.status'] == 4) {
                 $outputStatus = '<span class="label label-info inline-block">' . _l('billing_status_sent') . $span;
-            } elseif ($aRow['status'] == 5) {
+            } elseif ($aRow[db_prefix() . 'billings.status'] == 5) {
                 $outputStatus = '<span class="label label-warning inline-block">' . _l('billing_status_expired') . $span;
-            } elseif ($aRow['status'] == 6) {
+            } elseif ($aRow[db_prefix() . 'billings.status'] == 6) {
                 $outputStatus = '<span class="label label-success inline-block">' . _l('billing_status_approved') . '</span>';
             }
 
             $_data = $outputStatus;
 
     $row[] = $outputStatus;
-    //$row[] = format_billing_status($aRow['status']);
+    //$row[] = format_billing_status($aRow[db_prefix() . 'billings.status']);
 
     // Custom fields add values
     foreach ($customFieldsColumns as $customFieldColumn) {
