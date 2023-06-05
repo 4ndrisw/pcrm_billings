@@ -33,7 +33,7 @@ if ($this->ci->input->post('customers_related')) {
     array_push($filter, 'OR rel_type="customer"');
 }
 if ($this->ci->input->post('expired')) {
-    array_push($filter, 'OR open_till IS NOT NULL AND open_till <"' . date('Y-m-d') . '" AND status NOT IN(2,3)');
+    array_push($filter, 'OR open_till IS NOT NULL AND open_till <"' . date('Y-m-d') . '" AND '.db_prefix() . 'billings.status'.' NOT IN(2,3)');
 }
 
 $statuses  = $this->ci->billings_model->get_statuses();
@@ -45,7 +45,7 @@ foreach ($statuses as $status) {
     }
 }
 if (count($statusIds) > 0) {
-    array_push($filter, 'AND status IN (' . implode(', ', $statusIds) . ')');
+    array_push($filter, 'AND '. db_prefix() . 'billings.status' . ' IN (' . implode(', ', $statusIds) . ')');
 }
 
 $agents    = $this->ci->billings_model->get_sale_agents();
