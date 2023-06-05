@@ -36,8 +36,6 @@ class Billings extends AdminController
             access_denied('billings');
         }
         
-        log_activity($billing_id);
-
         $isPipeline = $this->session->userdata('billings_pipeline') == 'true';
 
         if ($isPipeline && !$this->input->get('status')) {
@@ -66,7 +64,7 @@ class Billings extends AdminController
             $data['billings_sale_agents']  = $this->billings_model->get_sale_agents();
             $data['years']                 = $this->billings_model->get_billings_years();
             
-            log_activity(json_encode($data));
+            
             /*
             if($billing_id){
                 $this->load->view('admin/billings/manage_small_table', $data);
