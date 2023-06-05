@@ -1294,10 +1294,10 @@ class Billings_model extends App_Model
         $this->db->join(db_prefix() . 'itemable', db_prefix() . 'itemable.task_id = ' . db_prefix() . 'tasks.id', 'LEFT');
 
         $query = $this->db->get(db_prefix().'tasks');
-        
+        $rows = $query->result_array();
         $i = 0;
         $data = [];
-        foreach ($query->result_array() as $row)
+        foreach ($rows as $row)
         {
             $i++;
             $record['rel_id'] = $billing_id;
@@ -1307,7 +1307,7 @@ class Billings_model extends App_Model
             $record['item_order'] = $i;
             $record['project_id'] = $project_id;
             $record['task_id'] = $row['task_id'];
-            log_activity(json_encode($row));
+            //log_activity(json_encode($row));
             $data[] = $record;
         }
         if(!empty($data)){
