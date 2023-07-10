@@ -6,6 +6,7 @@ $baseCurrency = get_base_currency();
 
 $aColumns = [
     db_prefix() . 'billings.id',
+    'number',
     db_prefix() . 'projects.name',
 //    'clientid',
     db_prefix() . 'clients.company',
@@ -117,6 +118,8 @@ $rResult = $result['rResult'];
 foreach ($rResult as $aRow) {
     $row = [];
 
+    $row[] = $aRow[db_prefix() . 'billings.id'];
+    
     // If is from client area table
     $numberOutput = '<a href="' . admin_url('billings/list_billings/' . $aRow[db_prefix() . 'billings.id']. '#' . $aRow[db_prefix() . 'billings.id']) . '" onclick="init_billing(' . $aRow[db_prefix() . 'billings.id'] . '); return false;">' . format_billing_number($aRow[db_prefix() . 'billings.id']) . '</a>';
 

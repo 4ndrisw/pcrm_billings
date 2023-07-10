@@ -104,6 +104,7 @@
                         <?php echo form_hidden('billing_id',$billing_id); ?>
                         <?php
                            $table_data = array(
+                              _l('id'),
                               _l('billing') . ' #',
                               _l('projects'),
                               _l('billing_to'),
