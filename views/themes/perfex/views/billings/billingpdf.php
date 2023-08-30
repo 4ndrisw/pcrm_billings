@@ -64,13 +64,13 @@ $left_info = $swap == '1' ? $organization_info : $customer_info;
 
 pdf_multi_row($left_info, $right_info, $pdf, ($dimensions['wk'] / 2) - $dimensions['lm']);
 
-$pdf->Ln(6);
+$pdf->Ln(4);
 $text = '<h1>I N V O I C E</h1>';
 
 $pdf->writeHTMLCell('', '', '', '', $text, 0, 1, false, true, 'C', true);
 
 // The Table
-$pdf->Ln(hooks()->apply_filters('pdf_info_and_table_separator', 4));
+$pdf->Ln(hooks()->apply_filters('pdf_info_and_table_separator', 1));
 
 // The items table
 $items = get_items_table_data($billing, 'billing', 'pdf');
@@ -79,7 +79,7 @@ $tblhtml = $items->table();
 
 $pdf->writeHTML($tblhtml, true, false, false, false, '');
 
-$pdf->Ln(2);
+//$pdf->Ln(1);
 $tbltotal = '';
 $tbltotal .= '<table cellpadding="6" style="font-size:' . ($font_size + 4) . 'px">';
 $tbltotal .= '
@@ -144,7 +144,7 @@ if (get_option('total_to_words_enabled') == 1) {
     $pdf->SetFont($font_name, '', $font_size);
 }
 
-$pdf->ln(6);
+$pdf->ln(1);
 
 /*
 $assigned_path = <<<EOF
