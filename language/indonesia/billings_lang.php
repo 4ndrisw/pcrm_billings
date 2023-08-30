@@ -15,7 +15,7 @@ $lang['billing_status_sent'] = 'Terkirim';
 $lang['billing_status_open'] = 'Terbuka';
 $lang['billing_status_revised'] = 'Direvisi';
 $lang['billing_status_declined'] = 'Ditolak';
-$lang['billing_status_accepted'] = 'Diterima';
+$lang['billing_status_accepted'] = 'Dibayar';
 $lang['billing_status_expired'] = 'Kadaluarsa';
 $lang['billing_status_approved'] = 'Disetujui';
 
